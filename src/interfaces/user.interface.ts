@@ -1,6 +1,6 @@
 interface IUser {
     name: string;
-    age: string;
+    age: number;
     email: string;
     photo: string;
     role: 'user' | 'admin',
