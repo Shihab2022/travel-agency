@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Document, Query, Schema, model } from "mongoose";
 import { IUser } from "../interfaces/user.interface";
 
 const userSchema = new Schema<IUser>({
@@ -29,6 +29,26 @@ const userSchema = new Schema<IUser>({
     }
 
 })
+
+///------> pre hook for query middleware
+
+// userSchema.pre('find', function (next) {
+//     this.find({ userStatus: { $eq: 'active' } })
+//     next()
+// })
+// userSchema.pre('findOne', function (next) {
+//     this.find({ userStatus: { $eq: 'active' } })
+//     next()
+// })
+
+
+//----------> If we handel all the find operation as like find , findOne etc . then we can use this bellow code by regular expression <-------------//
+userSchema.pre(/^find/, function (this: Query<IUser, Document>, next) {
+    this.find({ userStatus: { $eq: 'active' } })
+    next()
+})
+
+
 const User = model<IUser>('User', userSchema)
 
 export default User
