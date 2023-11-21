@@ -9,7 +9,30 @@ const createUser = async (userData: IUser): Promise<IUser> => {
 
     return result
 }
+const getAllUsers = async (): Promise<IUser[]> => {
+    const result = await User.find()
+    return result
+}
+const getSingleUser = async (id: string): Promise<IUser | null> => {
+    const result = await User.findById(id)
+    return result
+}
+const updateUser = async (id: string, data: IUser): Promise<IUser | null> => {
+    const result = await User.findByIdAndUpdate(id, data, {
+        new: true,
+        runValidators: true,
+    })
+    return result
+}
 
+const deleteUser = async (id: string): Promise<IUser | null> => {
+    const result = await User.findByIdAndDelete(id)
+    return result
+}
 export const userServices = {
     createUser,
+    getAllUsers,
+    getSingleUser,
+    updateUser,
+    deleteUser,
 }
